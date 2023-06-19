@@ -1,0 +1,200 @@
+[33mcommit a579744b8412353581853019b23a41fffc0b1b6b[m[33m ([m[1;36mHEAD -> [m[1;32mfront[m[33m)[m
+Author: Thiago Felipe <thiagofelipe1311@gmail.com>
+Date:   Sun Jun 18 21:53:37 2023 -0300
+
+    2 pra frente 10 pra tras
+
+[33mcommit 9fcd5484e630381bcfd33e3fcca844d9d2086819[m
+Author: Thiago Felipe <thiagofelipe1311@gmail.com>
+Date:   Sun Jun 18 21:33:11 2023 -0300
+
+    tamo perto do fim
+
+[33mcommit 609e666d9dcf9ab0a934d0b246cbc3a978c40b56[m
+Author: Marinho <joaovm048@gmail.com>
+Date:   Sun Jun 18 21:32:08 2023 -0300
+
+    correcao
+
+[33mcommit 33efcfa2329e3a0d137cbb628e53acbe1e20e5d9[m
+Author: Marinho <joaovm048@gmail.com>
+Date:   Sun Jun 18 21:19:47 2023 -0300
+
+    correcao circulo
+
+[33mcommit 22cc1b6b4f46983e823eee6ef68b8064f38790c3[m
+Author: Thiago Felipe <thiagofelipe1311@gmail.com>
+Date:   Sun Jun 18 21:05:47 2023 -0300
+
+    sa porra n pega viadu
+
+[33mcommit 1341c03d64b93080357bfc46f8e08b36ea825ac2[m
+Author: Thiago Felipe <thiagofelipe1311@gmail.com>
+Date:   Sun Jun 18 19:46:46 2023 -0300
+
+    dda e afins
+
+[33mcommit a95681b2662987eb8429b4dd0c4561581f235832[m
+Author: Marinho <joaovm048@gmail.com>
+Date:   Sun Jun 18 12:55:45 2023 -0300
+
+    correcao pontos
+
+[33mcommit e6cd8abe927589600de6ac0a173847549d8bc83c[m
+Author: Thiago Felipe <thiagofelipe1311@gmail.com>
+Date:   Sun Jun 18 12:53:30 2023 -0300
+
+    pontom
+
+[33mcommit 4c15282c10ce4f67ad9bcf56081cf1e1f99f79b1[m
+Author: Marinho <joaovm048@gmail.com>
+Date:   Sat Jun 17 21:39:32 2023 -0300
+
+    correcoes
+
+[33mcommit 74db6c627d5a3bfe0ce4ebca573f0529329db22d[m
+Author: Marinho <joaovm048@gmail.com>
+Date:   Sat Jun 17 20:38:13 2023 -0300
+
+    canvas para desenhar
+
+[33mcommit 6dd08e579e5a04716b4d73012a429310c9759706[m
+Author: Thiago Felipe <thiagofelipe1311@gmail.com>
+Date:   Sat Jun 17 20:05:14 2023 -0300
+
+    dda mais canvas
+
+[33mcommit f6ec9a4c8eec5c8059980a8021138ea244c975f5[m
+Merge: 68b8004 a50aa14
+Author: Thiago Felipe <thiagofelipe1311@gmail.com>
+Date:   Sat Jun 17 19:40:38 2023 -0300
+
+    Merge branch 'front' of https://github.com/Marinhojv02/CG into front
+
+[33mcommit 68b800436cb994bf38ac5c1fb149972557849c9e[m
+Author: Thiago Felipe <thiagofelipe1311@gmail.com>
+Date:   Sat Jun 17 19:40:34 2023 -0300
+
+    att dda
+
+[33mcommit a50aa146e111a7fa163ab181051c44aad9721ead[m
+Author: Marinho <joaovm048@gmail.com>
+Date:   Sat Jun 17 19:39:25 2023 -0300
+
+    correcao figuras
+
+[33mcommit 6af290ddc73ce908f92a196a8ff096c70adc7765[m
+Author: Thiago Felipe <thiagofelipe1311@gmail.com>
+Date:   Sat Jun 17 19:00:24 2023 -0300
+
+    Reta DDA
+
+[33mcommit 0b8266de1132df3f28b53dcc43783f630c78700c[m
+Author: Thiago Felipe <thiagofelipe1311@gmail.com>
+Date:   Sat Jun 17 16:04:52 2023 -0300
+
+    mudei o back
+
+[33mcommit 9bb50728f0e516b24814a5d1f320737badc22f8a[m
+Author: Thiago Felipe <thiagofelipe1311@gmail.com>
+Date:   Sat Jun 17 16:00:14 2023 -0300
+
+    novo front
+
+[33mcommit ad12a28ebb86cfd845c87404c5395b1762c95cb2[m
+Author: Thiago Felipe <thiagofelipe1311@gmail.com>
+Date:   Sat Jun 17 13:04:27 2023 -0300
+
+    front
+
+[33mcommit f9e39c62dff80ff6292b95fa8b7f513c159f3fbd[m
+Author: Thiago Felipe <thiagofelipe1311@gmail.com>
+Date:   Sat Jun 17 13:04:10 2023 -0300
+
+    new front
+
+[33mcommit ccc90a1acf57f3a0124e4fcec4101a62ab3f0924[m
+Author: Marinho <joaovm048@gmail.com>
+Date:   Thu Jun 15 19:03:05 2023 -0300
+
+    correcao
+
+[33mcommit ece7ab0ac43bce14d279eb9159c3421c59c2bae8[m
+Author: Marinho <joaovm048@gmail.com>
+Date:   Thu Jun 15 18:15:10 2023 -0300
+
+    transformacoes 2d
+
+[33mcommit 08756d02bdefdf829056e09d96e8b7dff88b157e[m
+Merge: 33df771 9f8b9c0
+Author: Marinho <joaovm048@gmail.com>
+Date:   Thu Jun 15 17:34:24 2023 -0300
+
+    Merge branch 'main' of https://github.com/Marinhojv02/CG
+
+[33mcommit 9f8b9c0fec30f228ac8714415398a1ed2fa6fc9a[m
+Merge: faa3968 1012441
+Author: Thiago Felipe <85183324+Thiti1311@users.noreply.github.com>
+Date:   Thu Jun 15 17:32:57 2023 -0300
+
+    Merge pull request #2 from Marinhojv02/circuloPontoMedio
+    
+    Thiago
+
+[33mcommit 101244135f8efe295422d04d966c13ce104f45c4[m[33m ([m[1;31morigin/circuloPontoMedio[m[33m, [m[1;32mcirculoPontoMedio[m[33m)[m
+Author: Thiago Felipe <thiagofelipe1311@gmail.com>
+Date:   Thu Jun 15 17:32:15 2023 -0300
+
+    Thiago
+
+[33mcommit 33df7710e83c7857229d5f06f88111f31212b9be[m
+Merge: 73d20a7 faa3968
+Author: Marinho <joaovm048@gmail.com>
+Date:   Thu Jun 15 17:31:08 2023 -0300
+
+    Merge branch 'main' of https://github.com/Marinhojv02/CG
+
+[33mcommit 73d20a7dfd2e0315de3c3e19a5823cfb1c822846[m
+Author: Marinho <joaovm048@gmail.com>
+Date:   Thu Jun 15 17:30:15 2023 -0300
+
+    retas e elipse
+
+[33mcommit faa3968a78be596dfd75433ffcb26061dba4a6c5[m
+Merge: 715f2d2 483d7ff
+Author: Thiago Felipe <85183324+Thiti1311@users.noreply.github.com>
+Date:   Thu Jun 15 17:00:10 2023 -0300
+
+    Merge pull request #1 from Marinhojv02/circuloPontoMedio
+    
+    Att do getCirculoPontoMedio
+
+[33mcommit 483d7ff03d9d6987c3e3ed0518d3704c191de43e[m
+Author: Thiago Felipe <thiagofelipe1311@gmail.com>
+Date:   Thu Jun 15 16:56:12 2023 -0300
+
+    Att do getCirculoPontoMedio
+
+[33mcommit 715f2d298fea639608e108459181eaa4045ac9f3[m
+Author: Marinho <joaovm048@gmail.com>
+Date:   Thu Jun 15 13:45:08 2023 -0300
+
+    esboço rotas backend
+
+[33mcommit 8482ad2aa7f48de52284ea287a272f8468eb3295[m
+Author: Marinho <joaovm048@gmail.com>
+Date:   Wed Jun 14 10:52:54 2023 -0300
+
+    .
+
+[33mcommit 47fbd93bcf2b2e5e78be5d0e603bc4710ae0a011[m
+Author: Marinho <joaovm048@gmail.com>
+Date:   Wed Jun 14 10:51:20 2023 -0300
+
+    second commit
+
+[33mcommit 08575a920f53d461563986c04eeb203b831c0882[m
+Author: Marinho <joaovm048@gmail.com>
+Date:   Wed Jun 14 10:50:06 2023 -0300
+
+    first commit

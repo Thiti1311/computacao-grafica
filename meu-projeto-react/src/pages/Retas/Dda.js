@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Menu from '../../components/Menu';
 import '../../styles/Retas.css'; // Importe o arquivo CSS para estilização
 import {handleButtonClick} from '../../components/CanvaDrawing2D';
@@ -17,7 +17,6 @@ function DDA() {
     valuex2: '',
     valuey2: ''
   });
-  const [lines, setLines] = useState([]);
 
   const fetchData = () => {
     const arrayData = [
