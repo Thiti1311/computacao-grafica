@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Menu from '../../components/Menu';
 import '../../styles/Retas.css'; // Importe o arquivo CSS para estilização
+import {handleButtonClick} from '../../components/CanvaDrawing2D';
 import axios from 'axios';
 
 function PontoM() {
 
   const porta = '9090';
   const rota = 'reta/ponto-medio';
+
+  let hasTransformed = false;
 
   const [formData, setFormData] = useState({
     valuex1: '',
@@ -25,7 +28,8 @@ function PontoM() {
     axios
       .post(`http://localhost:${porta}/figura/${rota}`, arrayData)
       .then(response => {
-        setLines(response.data);
+        handleButtonClick(canvasRef, response.data, hasTransformed);
+        hasTransformed = true;
       })
       .catch(error => {
         console.error(error);

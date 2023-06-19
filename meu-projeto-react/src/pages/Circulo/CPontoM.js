@@ -8,6 +8,7 @@ function CPontoM() {
 
     const porta = '9090';
     const rota = 'circulo/ponto-medio';
+
     let hasTransformed = false;
 
     const [formData, setFormData] = useState({
@@ -15,7 +16,7 @@ function CPontoM() {
       valuex: '',
       valuey: ''
     });
-    const [data, setData] = useState([]);
+
     const canvasRef = useRef(null);
 
     const fetchData = () => {
@@ -23,12 +24,12 @@ function CPontoM() {
       const arrayData = [
         {raio: parseInt(formData.raio), xOrigem: parseInt(formData.valuex), yOrigem: parseInt(formData.valuey) },
       ];
+
       axios
         .post(`http://localhost:${porta}/figura/${rota}`, arrayData)
         .then(response => {
-          console.log(hasTransformed)
-          handleButtonClick(canvasRef, response.data, hasTransformed)
-          hasTransformed = true
+          handleButtonClick(canvasRef, response.data, hasTransformed);
+          hasTransformed = true;
         })
         .catch(error => {
           console.error(error);
@@ -45,7 +46,6 @@ function CPontoM() {
 
     const handleSubmit = e => {
       e.preventDefault();
-      setData([]); // Limpar as circulo anterior
       fetchData();
     };
 
@@ -53,7 +53,6 @@ function CPontoM() {
       <div>
         <Menu />
         <h1>Circulo Ponto Medio</h1>
-
         <form onSubmit={handleSubmit} className="input-card">
           <h2>Ponto X e Y</h2>
           <div className="input-row">
@@ -69,18 +68,15 @@ function CPontoM() {
                   <label>Valor Raio:</label>
                   <input type="number" name="raio" value={formData.raio} onChange={handleChange} />
               </div>
-
           </div>
           <div className="button-container">
                   <button type="submit">Desenhar</button>
               </div>
         </form>
-
-        <div>
+        <div className="canvas-container">
           <canvas ref={canvasRef} width={500} height={500} />
         </div>
       </div>
     );
 }
-
 export default CPontoM;

@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Menu from '../../components/Menu';
 import '../../styles/Retas.css'; // Importe o arquivo CSS para estilização
+import {handleButtonClick} from '../../components/CanvaDrawing2D';
 import axios from 'axios';
 
 function DDA() {
 
   const porta = '9090';
   const rota = 'reta/dda';
+
+  let hasTransformed = false;
 
   const [formData, setFormData] = useState({
     valuex1: '',
@@ -25,7 +28,8 @@ function DDA() {
     axios
       .post(`http://localhost:${porta}/figura/${rota}`, arrayData)
       .then(response => {
-        setLines(response.data);
+        handleButtonClick(canvasRef, response.data, hasTransformed);
+        hasTransformed = true;
       })
       .catch(error => {
         console.error(error);
@@ -42,43 +46,10 @@ function DDA() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    setLines([]); // Limpar as retas anteriores
     fetchData();
   };
 
   const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-  
-    // Obter as dimensões da janela
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-  
-    // Definir o ponto médio da janela
-    const centerX = windowWidth / 2;
-    const centerY = windowHeight / 2;
-  
-    // Definir as coordenadas do ponto médio no canvas
-    const canvasCenterX = centerX;
-    const canvasCenterY = centerY;
-  
-    // Definir o tamanho do canvas
-    canvas.width = windowWidth;
-    canvas.height = windowHeight;
-  
-    // Desenhar as retas
-    lines.forEach(line => {
-      const { pontox, pontoy } = line;
-  
-      // Calcular as coordenadas no canvas
-      const canvasX = canvasCenterX + pontox;
-      const canvasY = canvasCenterY - pontoy;
-  
-      context.fillRect(canvasX, canvasY, 1, 1);
-    });
-  }, [lines]);
 
   return (
     <div>

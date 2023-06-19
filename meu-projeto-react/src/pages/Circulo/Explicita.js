@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Menu from '../../components/Menu';
 import '../../styles/Retas.css'; // Importe o arquivo CSS para estilização
+import {handleButtonClick} from '../../components/CanvaDrawing2D';
 import axios from 'axios';
 
 function Explicita() {
+  
   const porta = '9090';
   const rota = 'circulo/equacao-explicita';
+
+  let hasTransformed = false;
 
   const [formData, setFormData] = useState({
     raio: '',
     valuex: '',
     valuey: '',
   });
-  const [data, setData] = useState([]);
   const canvasRef = useRef(null);
 
   const fetchData = () => {
@@ -26,8 +29,9 @@ function Explicita() {
     ];
     axios
       .post(`http://localhost:${porta}/figura/${rota}`, arrayData)
-      .then((response) => {
-        setData(response.data);
+      .then(response => {
+        handleButtonClick(canvasRef, response.data, hasTransformed);
+        hasTransformed = true;
       })
       .catch((error) => {
         console.error(error);
@@ -44,37 +48,8 @@ function Explicita() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setData([]); // Limpar o círculo anterior
     fetchData();
   };
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-
-    // Função para desenhar o círculo no canvas
-    const drawCircle = () => {
-      // Limpar o canvas
-      context.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Definir as coordenadas do centro do plano
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
-
-      // Desenhar o círculo
-      data.forEach(([pontox, pontoy]) => {
-        const translatedX = centerX + pontox;
-        const translatedY = centerY - pontoy; // Inverter o eixo Y
-        context.beginPath();
-        context.arc(translatedX, translatedY, 1, 0, 2 * Math.PI);
-        context.fill();
-        context.closePath();
-      });
-    };
-
-    // Chamar a função de desenho após a atualização do estado data
-    drawCircle();
-  }, [data]);
 
   return (
     <div>
@@ -103,7 +78,7 @@ function Explicita() {
       </form>
 
       <div className="canvas-container">
-        <canvas ref={canvasRef} width={500} height={500} />
+          <canvas ref={canvasRef} width={500} height={500} />
       </div>
     </div>
   );

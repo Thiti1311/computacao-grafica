@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Menu from '../../components/Menu';
 import '../../styles/Retas.css'; // Importe o arquivo CSS para estilização
+import {handleButtonClick} from '../../components/CanvaDrawing2D';
 import axios from 'axios';
 
 function CPontoM() {
 
     const porta = '9090';
-    const rota = 'circulo/ponto-medio';
+    const rota = 'circulo/trigonometria';
+
+    let hasTransformed = false;
 
     const [formData, setFormData] = useState({
       raio: '',
       valuex: '',
       valuey: ''
     });
-    const [data, setData] = useState([]);
     const canvasRef = useRef(null);
 
     const fetchData = () => {
@@ -24,7 +26,8 @@ function CPontoM() {
       axios
         .post(`http://localhost:${porta}/figura/${rota}`, arrayData)
         .then(response => {
-          setData(response.data);
+          handleButtonClick(canvasRef, response.data, hasTransformed);
+          hasTransformed = true;
         })
         .catch(error => {
           console.error(error);
@@ -41,37 +44,13 @@ function CPontoM() {
 
     const handleSubmit = e => {
       e.preventDefault();
-      setData([]); // Limpar as circulo anterior
       fetchData();
     };
-
-    useEffect(() => {
-      const canvas = canvasRef.current;
-      const context = canvas.getContext('2d');
-    
-    // Função para desenhar o circulo no canvas
-    const drawCircle = () => {
-      // Limpar o canvas
-      context.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Desenhar o círculo
-      data.forEach(([pontox, pontoy]) => {
-        context.beginPath();
-        context.arc(pontox, pontoy, 1, 0, 2 * Math.PI);
-        context.fill();
-        context.closePath();
-      });
-    };
-      // Chamar a função de desenho após a atualização do estado data
-      drawCircle();
-      // Chamar a função de desenho após a atualização do estado data
-      drawCircle();
-    }, [data]);
 
     return (
       <div>
         <Menu />
-        <h1>Circulo Ponto Medio</h1>
+        <h1>Circulo Trigonometrico</h1>
 
         <form onSubmit={handleSubmit} className="input-card">
           <h2>Ponto X e Y</h2>

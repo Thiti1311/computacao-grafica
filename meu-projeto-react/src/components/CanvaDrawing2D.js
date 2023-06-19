@@ -30,3 +30,34 @@ function CanvasDrawing({ points }) {
 }
 
 export default CanvasDrawing;
+useEffect(() => {
+  const canvas = canvasRef.current;
+  const context = canvas.getContext('2d');
+
+  // Obter as dimensões da janela
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+
+  // Definir o ponto médio da janela
+  const centerX = windowWidth / 2;
+  const centerY = windowHeight / 2;
+
+  // Definir as coordenadas do ponto médio no canvas
+  const canvasCenterX = centerX;
+  const canvasCenterY = centerY;
+
+  // Definir o tamanho do canvas
+  canvas.width = windowWidth;
+  canvas.height = windowHeight;
+
+  // Desenhar as retas
+  lines.forEach(line => {
+    const { pontox, pontoy } = line;
+
+    // Calcular as coordenadas no canvas
+    const canvasX = canvasCenterX + pontox;
+    const canvasY = canvasCenterY - pontoy;
+
+    context.fillRect(canvasX, canvasY, 1, 1);
+  });
+}, [lines]);
