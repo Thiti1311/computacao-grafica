@@ -3,29 +3,27 @@ import Menu from '../../components/Menu';
 import '../../styles/Retas.css'; // Importe o arquivo CSS para estilização
 import axios from 'axios';
 
-function Explicita() {
+function EPontoM() {
 
     const porta = '9090';
-    const rota = 'circulo/equacao-explicita';
+    const rota = 'elipse/ponto-medio';
 
     const [formData, setFormData] = useState({
-      raio: '',
-      valuex: '',
-      valuey: ''
+      centerPos: '',
+      minorRadioSize: '',
     });
     const [data, setData] = useState([]);
     const canvasRef = useRef(null);
 
     const fetchData = () => {
-      //req should be -> [{"raio": "r", "xOrigem": "xOrigem", "yOrigem":"yOrigem"}]
+      //req should be -> [{"ElipseCenter": "centerPos", "MinorRadius": "minorRadioSize"}]
       const arrayData = [
-        {raio: parseInt(formData.raio), xOrigem: parseInt(formData.valuex), yOrigem: parseInt(formData.valuey) },
+        {ElipseCenter: parseInt(formData.centerPos), MinorRadius: parseInt(formData.minorRadioSize) },
       ];
       axios
         .post(`http://localhost:${porta}/figura/${rota}`, arrayData)
         .then(response => {
           setData(response.data);
-          console.log(response.data)
         })
         .catch(error => {
           console.error(error);
@@ -51,7 +49,7 @@ function Explicita() {
       const context = canvas.getContext('2d');
     
     // Função para desenhar o circulo no canvas
-    const drawCircle = () => {
+    const drawElipse = () => {
       // Limpar o canvas
       context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -64,32 +62,25 @@ function Explicita() {
       });
     };
       // Chamar a função de desenho após a atualização do estado data
-      drawCircle();
-      // Chamar a função de desenho após a atualização do estado data
-      drawCircle();
+      drawElipse();
     }, [data]);
 
     return (
       <div>
         <Menu />
-        <h1>Circulo Explicita</h1>
+        <h1>Elipse Ponto Medio</h1>
 
         <form onSubmit={handleSubmit} className="input-card">
           <h2>Ponto X e Y</h2>
           <div className="input-row">
               <div className="input-group">
-                  <label>Valor X:</label>
-                  <input type="number" name="valuex" value={formData.valuex} onChange={handleChange} />
+                  <label>Valor CenterPosition:</label>
+                  <input type="number" name="centerPos" value={formData.centerPos} onChange={handleChange} />
               </div>
               <div className="input-group">
-                  <label>Valor Y:</label>
-                  <input type="number" name="valuey" value={formData.valuey} onChange={handleChange} />
+                  <label>Valor Minor Radio Size:</label>
+                  <input type="number" name="minorRadioSize" value={formData.minorRadioSize} onChange={handleChange} />
               </div>
-              <div className="input-group">
-                  <label>Valor Raio:</label>
-                  <input type="number" name="raio" value={formData.raio} onChange={handleChange} />
-              </div>
-
           </div>
           <div className="button-container">
                   <button type="submit">Desenhar</button>
@@ -103,4 +94,4 @@ function Explicita() {
     );
 }
 
-export default Explicita;
+export default EPontoM;

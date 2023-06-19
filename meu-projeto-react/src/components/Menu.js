@@ -44,7 +44,12 @@ const Menu = () => {
         </li>
         <li className={currentPage === '/circulos/cpontom' ? 'active' : ''}>
           <Link to="/circulos/cpontom" onClick={() => handlePageChange('/circulos/cpontom')}>
-            Circulo Ponto Medio
+            Circulo Ponto Médio
+          </Link>
+        </li>
+        <li className={currentPage === '/elipses/epontom' ? 'active' : ''}>
+          <Link to="/elipses/epontom" onClick={() => handlePageChange('/elipses/epontom')}>
+            Elipse Ponto Médio
           </Link>
         </li>
       </ul>

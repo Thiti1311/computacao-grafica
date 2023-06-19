@@ -10,9 +10,11 @@ import Sobre from './pages/Sobre';
 import RDda from './pages/Retas/Dda';
 import RPontoM from './pages/Retas/PontoM';
 //Circulos
-import CExplicita from './pages/Circulo/Explicita';
-import CTrigonometrica from './pages/Circulo/Trigonometria';
-import CPontoM from './pages/Circulo/CPontoM';
+import CExplicita from './pages/Circulos/Explicita';
+import CTrigonometrica from './pages/Circulos/Trigonometria';
+import CPontoM from './pages/Circulos/CPontoM';
+//Elipses
+import EPontoM from './pages/Elipses/EPontoM';
 
 const App = () => {
   return (
@@ -25,6 +27,7 @@ const App = () => {
       <Route path="/circulos/explicita" component={CExplicita} />
       <Route path="/circulos/trigonometrica" component={CTrigonometrica} />
       <Route path="/circulos/cpontom" component={CPontoM} />
+      <Route path="/elipses/epontom" component={EPontoM} />
     </Router>
   );
 }
