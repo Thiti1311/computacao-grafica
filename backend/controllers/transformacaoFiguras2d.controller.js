@@ -35,7 +35,7 @@ class Transformacao{
   }
 
   translacao(transX, transY){
-    return [[1, 1, transX], [1, 1, transY], [1, 1, 1]];
+    return [[transX, 0, 0], [0, transY, 0], [0, 0, 1]];
   }
 
   rotacao(angulo){
@@ -44,29 +44,29 @@ class Transformacao{
     let cosO = Math.cos(radians);
     let senO = Math.sin(radians);
 
-    return [[cosO, -senO, 1], [senO, cosO, 1], [1, 1, 1]];
+    return [[cosO, -senO, 0], [senO, cosO, 0], [0, 0, 1]];
   }
 
   escala(escalaX,escalaY){
-    return [[escalaX, 1, 1], [1, escalaY, 1], [1, 1, 1]];
+    return [[escalaX, 0, 0], [0, escalaY, 0], [0, 0, 1]];
   }
 
   cisalhamento(fatorCisalhamento,direcao){
     //cisalhamento em X
     if(direcao === 'x'){
-      return [[1, fatorCisalhamento, 1], [1, 1, 1], [1, 1, 1]];
+      return [[0, fatorCisalhamento, 0], [0, 1, 0], [0, 0, 1]];
     }
     //cisalhamento em Y
-    return [[1, 1, 1], [fatorCisalhamento, 1, 1], [1, 1, 1]];
+    return [[1, 0, 0], [fatorCisalhamento, 1, 0], [1, 0, 1]];
   }
 
   reflexao(eixo){
     //reflexao em X
     if(eixo === 'x'){
-      return [[1, 1, 1], [1, -1, 1], [1, 1, 1]];
+      return [[1, 0, 0], [0, -1, 0], [0, 0, 1]];
     }
     //reflexao em Y
-    return [[-1, 1, 1], [1, 1, 1], [1, 1, 1]];
+    return [[-1, 0, 0], [0, 1, 0], [0, 0, 1]];
   }
 
 }
