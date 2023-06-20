@@ -1,15 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Menu from '../../components/Menu';
-import '../../styles/Retas.css'; // Importe o arquivo CSS para estilização
-import {handleButtonClick} from '../../components/CanvaDrawing2D';
+import '../../styles/Retas.css'; // Import the CSS file for styling
 import axios from 'axios';
 
 function DDA() {
-
   const porta = '9090';
   const rota = 'reta/dda';
-
-  let hasTransformed = false;
 
   const [formData, setFormData] = useState({
     valuex1: '',
@@ -17,6 +13,14 @@ function DDA() {
     valuex2: '',
     valuey2: ''
   });
+
+  const [pointsData, setPointsData] = useState([]);
+
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    drawLine();
+  }, [pointsData]);
 
   const fetchData = () => {
     const arrayData = [
@@ -27,8 +31,7 @@ function DDA() {
     axios
       .post(`http://localhost:${porta}/figura/${rota}`, arrayData)
       .then(response => {
-        handleButtonClick(canvasRef, response.data, hasTransformed);
-        hasTransformed = true;
+        setPointsData(response.data);
       })
       .catch(error => {
         console.error(error);
@@ -48,13 +51,31 @@ function DDA() {
     fetchData();
   };
 
-  const canvasRef = useRef(null);
+  const drawLine = () => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    
+    if (pointsData.length > 0) {
+      const offsetX = canvas.width / 2; // Offset to center horizontally
+      const offsetY = canvas.height / 2; // Offset to center vertically
+      
+      context.beginPath();
+      context.moveTo(pointsData[0].pontox + offsetX, -pointsData[0].pontoy + offsetY);
+      
+      for (let i = 1; i < pointsData.length; i++) {
+        const { pontox, pontoy } = pointsData[i];
+        context.lineTo(pontox + offsetX, -pontoy + offsetY);
+      }
+      
+      context.stroke();
+    }
+  };
 
   return (
     <div>
       <Menu />
       <h1>Reta DDA</h1>
-
       <form onSubmit={handleSubmit} className="input-card">
         <h2>Ponto 1</h2>
         <div className="input-row">
@@ -86,7 +107,7 @@ function DDA() {
       </form>
 
       <div className="canvas-container">
-        <canvas ref={canvasRef} />
+        <canvas ref={canvasRef} width={500} height={500} />
       </div>
     </div>
   );

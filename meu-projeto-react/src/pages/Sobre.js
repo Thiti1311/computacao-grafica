@@ -1,6 +1,7 @@
 import React from 'react';
 import imagem1 from '../imgs/thiago.png';
 import imagem2 from '../imgs/marinho.png';
+import imagem3 from '../imgs/welio.jpg';
 import '../styles/Sobre.css';
 import Menu from '../components/Menu';
 
@@ -23,7 +24,13 @@ const Sobre = () => {
             <p>Aluno de Computação na UEPB no Sexto período. Atualmente estagiário de QA na Orbit Tech.</p>
           </div>
         </div>
-       
+        <div className="card">
+          <img src={imagem3} alt="Perfil 3" />
+          <div className="card-content">
+            <h2>Francisco Welio</h2>
+            <p>Aluno de Computação na UEPB no Sexto período. Atualmente estagiário de QA na Orbit Tech.</p>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Menu from '../../components/Menu';
 import '../../styles/Retas.css'; // Importe o arquivo CSS para estilização
-import {handleButtonClick} from '../../components/CanvaDrawing2D';
 import axios from 'axios';
 
 function PontoM() {
@@ -9,15 +8,23 @@ function PontoM() {
   const porta = '9090';
   const rota = 'reta/ponto-medio';
 
-  let hasTransformed = false;
-
   const [formData, setFormData] = useState({
     valuex1: '',
     valuey1: '',
     valuex2: '',
     valuey2: ''
   });
-  const [lines, setLines] = useState([]);
+
+  const [pointsData, setPointsData] = useState([]);
+
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    drawPoints(context, pointsData);
+  }, [pointsData]);
 
   const fetchData = () => {
     const arrayData = [
@@ -28,8 +35,7 @@ function PontoM() {
     axios
       .post(`http://localhost:${porta}/figura/${rota}`, arrayData)
       .then(response => {
-        handleButtonClick(canvasRef, response.data, hasTransformed);
-        hasTransformed = true;
+        setPointsData(response.data);
       })
       .catch(error => {
         console.error(error);
@@ -49,7 +55,25 @@ function PontoM() {
     fetchData();
   };
 
-  const canvasRef = useRef(null);
+  const drawPoints = (context, points) => {
+    context.beginPath();
+    context.strokeStyle = '#000000';
+    context.lineWidth = 1;
+    
+    if (points.length > 0) {
+      const offsetX = canvasRef.current.width / 2; // Offset to center horizontally
+      const offsetY = canvasRef.current.height / 2; // Offset to center vertically
+
+      context.moveTo(points[0].pontox + offsetX, -points[0].pontoy + offsetY);
+      
+      for (let i = 1; i < points.length; i++) {
+        const { pontox, pontoy } = points[i];
+        context.lineTo(pontox + offsetX, -pontoy + offsetY);
+      }
+    }
+    
+    context.stroke();
+  };
 
   return (
     <div>

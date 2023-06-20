@@ -1,78 +1,109 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Menu from '../../components/Menu';
 import '../../styles/Retas.css'; // Importe o arquivo CSS para estilização
-import {handleButtonClick} from '../../components/CanvaDrawing2D';
 import axios from 'axios';
 
-function EPontoM() {
+function CPontoM() {
+  
+  const porta = '9090';
+  const rota = 'elipse/ponto-medio';
+//req should be -> [{"ElipseCenter": "centerPos", "MinorRadius": "minorRadioSize"}]
 
-    const porta = '9090';
-    const rota = 'elipse/ponto-medio';
+  const [formData, setFormData] = useState({
+    centerPos: '',
+    minorRadioSize: ''
+  });
 
-    let hasTransformed = false;
+  const [pointsData, setPointsData] = useState([]);
 
-    const [formData, setFormData] = useState({
-      centerPos: '',
-      minorRadioSize: '',
-    });
-    const canvasRef = useRef(null);
+  const canvasRef = useRef(null);
 
-    const fetchData = () => {
-      //req should be -> [{"ElipseCenter": "centerPos", "MinorRadius": "minorRadioSize"}]
-      const arrayData = [
-        {ElipseCenter: parseInt(formData.centerPos), MinorRadius: parseInt(formData.minorRadioSize) },
-      ];
-      axios
-        .post(`http://localhost:${porta}/figura/${rota}`, arrayData)
-        .then(response => {
-          handleButtonClick(canvasRef, response.data, hasTransformed);
-          hasTransformed = true;
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    };
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    drawPoints(context, pointsData);
+  }, [pointsData]);
 
-    const handleChange = e => {
-      const { name, value } = e.target;
-      setFormData(prevState => ({
-        ...prevState,
-        [name]: value
-      }));
-    };
+  const fetchData = () => {
+    const arrayData = [
+      {
+        ElipseCenter: parseInt(formData.centerPos),
+        MinorRadius: parseInt(formData.minorRadioSize)
+      },
+    ];
 
-    const handleSubmit = e => {
-      e.preventDefault();
-      fetchData();
-    };
+    axios
+      .post(`http://localhost:${porta}/figura/${rota}`, arrayData)
+      .then(response => {
+        setPointsData(response.data);
+        console.log(response.data)
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
-    return (
-      <div>
-        <Menu />
-        <h1>Elipse Ponto Medio</h1>
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
 
-        <form onSubmit={handleSubmit} className="input-card">
-          <h2>Ponto X e Y</h2>
-          <div className="input-row">
-              <div className="input-group">
-                  <label>Valor CenterPosition:</label>
-                  <input type="number" name="centerPos" value={formData.centerPos} onChange={handleChange} />
-              </div>
-              <div className="input-group">
-                  <label>Valor Minor Radio Size:</label>
-                  <input type="number" name="minorRadioSize" value={formData.minorRadioSize} onChange={handleChange} />
-              </div>
+  const handleSubmit = e => {
+    e.preventDefault();
+    fetchData();
+  };
+
+  const drawPoints = (context, points) => {
+    context.beginPath();
+  
+    if (points.length > 0) {
+      const offsetX = canvasRef.current.width / 2; // Offset to center horizontally
+      const offsetY = canvasRef.current.height / 2; // Offset to center vertically
+  
+      context.moveTo(points[0].pontox + offsetX, -points[0].pontoy + offsetY);
+  
+      for (let i = 1; i < points.length; i++) {
+        const { pontox, pontoy } = points[i];
+        context.lineTo(pontox + offsetX, -pontoy + offsetY);
+      }
+    }
+  
+    context.strokeStyle = '#000000';
+    context.fillStyle = 'transparent';
+    context.stroke();
+  };
+
+  return (
+    <div>
+      <Menu />
+      <h1>Elipse</h1>
+
+      <form onSubmit={handleSubmit} className="input-card">
+        <h2>ElipseCenter e MinorRadius</h2>
+        <div className="input-row">
+          <div className="input-group">
+            <label>Valor ElipseCenter:</label>
+            <input type="number" name="centerPos" value={formData.centerPos} onChange={handleChange} />
           </div>
-          <div className="button-container">
-                  <button type="submit">Desenhar</button>
-              </div>
-        </form>
-
-        <div className="canvas-container">
-          <canvas ref={canvasRef} width={500} height={500} />
+          <div className="input-group">
+            <label>Valor MinorRadius:</label>
+            <input type="number" name="minorRadioSize" value={formData.minorRadioSize} onChange={handleChange} />
+          </div>
         </div>
+        <div className="button-container">
+          <button type="submit">Desenhar</button>
+        </div>
+      </form>
+
+      <div className="canvas-container">
+          <canvas ref={canvasRef} width={500} height={500} />
       </div>
-    );
+    </div>
+  );
 }
 
-export default EPontoM;
+export default CPontoM;

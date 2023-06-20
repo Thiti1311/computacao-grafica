@@ -11,6 +11,7 @@ const CIRCULOEXPLICITA = '/figura/circulo/equacao-explicita';
 const CIRCULOTRIGONOMETRIA = '/figura/circulo/trigonometria';
 const CIRCULOPONTOMEDIO = '/figura/circulo/ponto-medio';
 const ELIPSEPONTOMEDIO = '/figura/elipse/ponto-medio';
+const ECG = '/ecg';
 
 // get -> `http:localhost:3000${RETADDA}` 
 
@@ -48,8 +49,14 @@ router.post(CIRCULOTRIGONOMETRIA, (req, res, next) => {
 
 //req should be -> [{"ElipseCenter": "centerPos", "MinorRadius": "minorRadioSize"}]
 router.post(ELIPSEPONTOMEDIO, (req, res, next) => {
-  const [{ElipseCenter, MinorRadius}] = req.body
-	res.send(controller.getElipsePontoMedio(parseInt(ElipseCenter), parseInt(MinorRadius)))
-})
+  const { ElipseCenter, MinorRadius } = req.body[0];
+  res.send(controller.getElipsePontoMedio(parseInt(ElipseCenter), parseInt(MinorRadius)));
+});
+
+router.post(ECG, (req, res, next) => {
+  const { valorx, valory } = req.body;
+  res.send(controller.getEcg(parseInt(valorx), parseInt(valory)));
+});
+
 
 module.exports = router

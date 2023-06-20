@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Menu from '../../components/Menu';
 import '../../styles/Retas.css'; // Importe o arquivo CSS para estilização
-import {handleButtonClick} from '../../components/CanvaDrawing2D';
 import axios from 'axios';
 
 function Explicita() {
@@ -9,17 +8,24 @@ function Explicita() {
   const porta = '9090';
   const rota = 'circulo/equacao-explicita';
 
-  let hasTransformed = false;
-
   const [formData, setFormData] = useState({
     raio: '',
     valuex: '',
     valuey: '',
   });
+
+  const [pointsData, setPointsData] = useState([]);
+
   const canvasRef = useRef(null);
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    drawPoints(context, pointsData);
+  }, [pointsData]);
+
   const fetchData = () => {
-    //req should be -> [{"raio": "r", "xOrigem": "xOrigem", "yOrigem":"yOrigem"}]
     const arrayData = [
       {
         raio: parseInt(formData.raio),
@@ -27,28 +33,48 @@ function Explicita() {
         yOrigem: parseInt(formData.valuey),
       },
     ];
+
     axios
       .post(`http://localhost:${porta}/figura/${rota}`, arrayData)
       .then(response => {
-        handleButtonClick(canvasRef, response.data, hasTransformed);
-        hasTransformed = true;
+        setPointsData(response.data);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error(error);
       });
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
+    setFormData(prevState => ({
       ...prevState,
-      [name]: value,
+      [name]: value
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     fetchData();
+  };
+
+  const drawPoints = (context, points) => {
+    context.beginPath();
+  
+    if (points.length > 0) {
+      const offsetX = canvasRef.current.width / 2; // Offset to center horizontally
+      const offsetY = canvasRef.current.height / 2; // Offset to center vertically
+  
+      context.moveTo(points[0].pontox + offsetX, -points[0].pontoy + offsetY);
+  
+      for (let i = 1; i < points.length; i++) {
+        const { pontox, pontoy } = points[i];
+        context.lineTo(pontox + offsetX, -pontoy + offsetY);
+      }
+    }
+  
+    context.strokeStyle = '#000000';
+    context.fillStyle = 'transparent';
+    context.stroke();
   };
 
   return (

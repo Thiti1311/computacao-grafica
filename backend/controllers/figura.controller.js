@@ -145,11 +145,10 @@ class FiguraController {
       ];
   
       pontosSimetricos.forEach(([pontox, pontoy]) => {
-        pontos.push({ pontox: pontox + xOrigem, pontoy: pontox + yOrigem });
+        pontos.push({ pontox: pontox + xOrigem, pontoy: pontoy + yOrigem });
       });
     }
   
-    console.log(pontos)
     return pontos;
   }
 
@@ -204,89 +203,86 @@ class FiguraController {
   }
 
   //colocar parametros
-  getCirculoMetodoTrigonometria(raio, xOrigem, yOrigem){
-    
+  getCirculoMetodoTrigonometria = (raio, xOrigem, yOrigem) => {
     const incrementoAngulo = Math.PI / 180;
     const pontos = [];
-    
+  
     for (let angulo = 0; angulo <= 2 * Math.PI; angulo += incrementoAngulo) {
       const x = xOrigem + raio * Math.cos(angulo);
       const y = yOrigem + raio * Math.sin(angulo);
       pontos.push({ pontox: Math.round(x), pontoy: Math.round(y) });
     }
-    
+  
     const ultimoPonto = pontos[pontos.length - 1];
-    pontos.push({ pontox: Math.round(ultimoPonto[0]), pontoy:  Math.round(ultimoPonto[1]) });
-    
+    pontos.push({ pontox: Math.round(ultimoPonto.pontox), pontoy: Math.round(ultimoPonto.pontoy) });
+  
+    return pontos;
+  };
+
+  getElipsePontoMedio(elipseCenter, minorRadius) {
+    var pontos = [];
+  
+    var a = minorRadius;
+    var b = elipseCenter;
+    var x = 0;
+    var y = a;
+  
+    // Região 1
+    var d1 = (b * b) - (a * a * b) + (0.25 * a * a);
+    var dx = 2 * b * b * x;
+    var dy = 2 * a * a * y;
+  
+    while (dx < dy) {
+      pontos.push({ pontox: x, pontoy: y });
+      pontos.push({ pontox: x, pontoy: -y });
+      pontos.push({ pontox: -x, pontoy: y });
+      pontos.push({ pontox: -x, pontoy: -y });
+  
+      if (d1 < 0) {
+        x++;
+        dx = dx + (2 * b * b);
+        d1 = d1 + dx + (b * b);
+      } else {
+        x++;
+        y--;
+        dx = dx + (2 * b * b);
+        dy = dy - (2 * a * a);
+        d1 = d1 + dx - dy + (b * b);
+      }
+    }
+  
+    // Região 2
+    var d2 = ((b * b) * ((x + 0.5) * (x + 0.5))) + ((a * a) * ((y - 1) * (y - 1))) - (a * a * b * b);
+  
+    while (y >= 0) {
+      pontos.push({ pontox: x, pontoy: y });
+      pontos.push({ pontox: -x, pontoy: y });
+      pontos.push({ pontox: x, pontoy: -y });
+      pontos.push({ pontox: -x, pontoy: -y });
+  
+      if (d2 > 0) {
+        y--;
+        dy = dy - (2 * a * a);
+        d2 = d2 + (a * a) - dy;
+      } else {
+        y--;
+        x++;
+        dx = dx + (2 * b * b);
+        dy = dy - (2 * a * a);
+        d2 = d2 + dx - dy + (a * a);
+      }
+    }
+  
     return pontos;
   }
 
-  getElipsePontoMedio(elipseCenter, minorRadius){
-      var pontos = [];
-  
-      var dx, dy, d1, d2, x, y;
-      x = 0;
-      y = minorRadius;
-  
-      // Decisao inicial de regiao
-      d1 = (minorRadius * minorRadius) - (elipseCenter * elipseCenter * minorRadius) +
-          (0.25 * elipseCenter * elipseCenter);
-      dx = 2 * minorRadius * minorRadius * x;
-      dy = 2 * elipseCenter * elipseCenter * y;
-  
-      // Para primeira regiao
-      while (dx < dy) {
-  
-          // adicionando pontos baseado na simetria de 4 lados
-          pontos.push({ pontox: x, pontoy: y });
-          pontos.push({ pontox: x, pontoy: -y });
-          pontos.push({ pontox: -x, pontoy: y });
-          pontos.push({ pontox: -x, pontoy: -y });
-  
-          // Checking and updating value of
-          // decision parameter based on algorithm
-          if (d1 < 0) {
-              x++;
-              dx = dx + (2 * minorRadius * minorRadius);
-              d1 = d1 + dx + (minorRadius * minorRadius);
-          } else {
-              x++;
-              y--;
-              dx = dx + (2 * minorRadius * minorRadius);
-              dy = dy - (2 * elipseCenter * elipseCenter);
-              d1 = d1 + dx - dy + (minorRadius * minorRadius);
-          }
-      }
-  
-      // Decision parameter of region 2
-      d2 = ((minorRadius * minorRadius) * ((x + 0.5) * (x + 0.5)))
-          + ((elipseCenter * elipseCenter) * ((y - 1) * (y - 1)))
-          - (elipseCenter * elipseCenter * minorRadius * minorRadius);
-  
-      // Plotting points of region 2
-      while (y >= 0) {
-  
-          // adicionando pontos baseado na simetria de 4 lados
-          pontos.push({ pontox: x, pontoy: y });
-          pontos.push({ pontox: -x, pontoy: y });
-          pontos.push({ pontox: x, pontoy: -y });
-          pontos.push({ pontox: -x, pontoy: -y });
-  
-          // Checking and updating parameter
-          // value based on algorithm
-          if (d2 > 0) {
-              y--;
-              dy = dy - (2 * elipseCenter * elipseCenter);
-              d2 = d2 + (elipseCenter * elipseCenter) - dy;
-          } else {
-              y--;
-              x++;
-              dx = dx + (2 * minorRadius * minorRadius);
-              dy = dy - (2 * elipseCenter * elipseCenter);
-              d2 = d2 + dx - dy + (elipseCenter * elipseCenter);
-          }
-      }
-      return pontos;
+  getEcg(valorx, valory){
+    //flaço para gerar valores variados 
+    //repetição para animar
+    for (let index = 0; index < 360; index++){
+      valor = parseInt(Math.sin(index * Math.PI));
+      console.log(valor); 
+    }
   }
 }
 
