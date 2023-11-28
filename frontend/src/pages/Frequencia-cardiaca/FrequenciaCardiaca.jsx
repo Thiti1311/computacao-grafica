@@ -27,6 +27,23 @@ const HeartRateSimulator = () => {
         min: 0,
         max: 120,
       },
+      // Add a horizontal baseline at y = 60
+      annotations: {
+        yaxis: [
+          {
+            y: 60,
+            borderColor: '#999',
+            label: {
+              show: true,
+              text: 'Baseline',
+              style: {
+                color: '#fff',
+                background: '#00E396',
+              },
+            },
+          },
+        ],
+      },
     },
     series: [
       {
@@ -48,6 +65,7 @@ const HeartRateSimulator = () => {
 
         setChartOptions((prevOptions) => {
           const currentTime = moment().valueOf();
+          
           return {
             ...prevOptions,
             options: {
