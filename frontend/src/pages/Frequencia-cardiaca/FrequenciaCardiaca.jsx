@@ -61,7 +61,7 @@ const HeartRateSimulator = () => {
 
     return baselinePoints;
   };
-  const getRetaDDA = (x0, y0, xEnd, yEnd) => {
+  const retaDDA = (x0, y0, xEnd, yEnd) => {
     let pontos = [];
     let dx = xEnd - x0,
       dy = yEnd - y0,
@@ -95,7 +95,7 @@ const HeartRateSimulator = () => {
     return pontos;
   };
 
-  const getRetaPontoMedio = (x0, y0, x1, y1) => {
+  const pontoMedio = (x0, y0, x1, y1) => {
     [x0, y0] = [Math.round(x0), Math.round(y0)];
     [x1, y1] = [Math.round(x1), Math.round(y1)];
     let [x, y] = [x0, y0];
@@ -153,8 +153,8 @@ const HeartRateSimulator = () => {
       const [x0, y0] = [i, heartRateData[i]];
       const [x1, y1] = [i + 1, heartRateData[i + 1]];
 
-      const ddaPoints = getRetaDDA(x0, y0, x1, y1);
-      const midpointPoints = getRetaPontoMedio(x0, y0, x1, y1);
+      const ddaPoints = retaDDA(x0, y0, x1, y1);
+      const midpointPoints = pontoMedio(x0, y0, x1, y1);
 
       ddaLines.push(...ddaPoints);
       midpointLines.push(...midpointPoints);
