@@ -27,7 +27,6 @@ const HeartRateSimulator = () => {
         min: 0,
         max: 120,
       },
-      // Add a horizontal baseline at y = 60
       annotations: {
         yaxis: [
           {
