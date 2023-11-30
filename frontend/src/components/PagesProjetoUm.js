@@ -13,6 +13,7 @@ const Pages = {
     PROJECAOISOMETRICA: { key: 'recorte/projecaoisometrica', title: 'Projeção Isométrica'},
     PROJECAOORTOGRAFICA: { key: 'recorte/projecaoortografica', title: 'Projeção Ortográfica'},
     FREQUENCUA: { key: 'frequencia-caridaca', title: 'Frenquencia Cardiaca'},
+    TESTE: { key:'teste', titte: 'Teste'},
 };
 
 module.exports = Pages;

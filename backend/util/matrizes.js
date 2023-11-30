@@ -14,9 +14,12 @@ class Matrizes{
   }
 
   multiplicaMatriz() {
-    console.log(this.matriz1)
-    console.log('------')
-    console.log(this.matriz2)
+    // console.log('------ matriz1')
+    // console.log(this.matriz1)
+    // console.log('------ matriz2')
+    // console.log(this.matriz2)
+    // console.log('------ fim')
+
 
     const rows1 = this.matriz1.length;
     const cols1 = this.matriz1[0].length;
@@ -37,7 +40,6 @@ class Matrizes{
         }
       }
     }
-  
     return result;
   }
 }

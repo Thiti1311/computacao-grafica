@@ -3,37 +3,49 @@ const matriz = require('../util/matrizes')
 class Transformacao{
 
 // req should be in format -> [{"tipo_transformacao": "translacao", "params": {"param1":"param1", "param2": "param2", ...}},{"tipo_transformacao": "translacao", "params": {"param1":"param1", "param2": "param2", ...}][{"pontox": "x", "pontoY": "Y"},{"pontox": "x", "pontoY": "Y"},...]
-transformaPontos(req) {
-  let transformacoes = JSON.parse(req.query.transformacoes);
-  let pontosOriginais = req.query.pontosOriginais;
+  transformaPontos(req){
+    let transformacoes = req.body.transformacoes;
+    let pontosOriginais = req.body.pontosOriginais;
 
-  let m = [[1, 1, 1], [1, 1, 1], [1, 1, 1]];
+    let m = [[1, 1, 1], [1, 1, 1], [1, 1, 1]];
 
-  // Set matriz2 before the loop
-  matriz.defineMatriz2(m);
+    matriz.defineMatriz1(m)
 
-  transformacoes.forEach(transformacao => {
-    const matriz_transformacao = this.getTransformacao(transformacao.tipo_transformacao, transformacao.params);
+
+    transformacoes.forEach((transformacao) => {
+      const tipoTransformacao = transformacao.tipo_transformacao;
+      const parametros = transformacao.params;
+    
+      let m2 = this.getTransformacao(tipoTransformacao, parametros);
+      
+      matriz.defineMatriz2(m2);
+    
+      // Acumula as transformações multiplicando as matrizes
+      m = matriz.multiplicaMatriz();
+    });
+
+    let pontosTransformados = [];
+    
     matriz.defineMatriz1(m);
-    m = matriz.multiplicaMatriz();
-    matriz.defineMatriz2(matriz_transformacao);
-    m = matriz.multiplicaMatriz();
-  });
 
-  let pontosTransformados = pontosOriginais.map(ponto => {
-    matriz.defineMatriz1(m);
-    const pontoHomogeneo = matriz.multiplicaMatriz([ponto.pontox, ponto.pontoy, 1]);
-    const pontoTransformado = {
-      pontoX: pontoHomogeneo[0][0] / pontoHomogeneo[0][2],
-      pontoY: pontoHomogeneo[0][1] / pontoHomogeneo[0][2],
-    };
-    return pontoTransformado;
-  });
+    pontosOriginais.map((ponto) => {
+      const pontoX = ponto.pontox;
+      const pontoY = ponto.pontoy;
 
-  console.log('Transformed Points:', pontosTransformados);
-
-  return pontosTransformados;
-}
+      matriz.defineMatriz2([
+        [pontoX, pontoY, 1],
+        [0, 0, 1],
+        [0, 0, 1]
+      ]);
+    
+      // Arredonda os valores da matriz resultante
+      const pontoTransformado = matriz.multiplicaMatriz().map(row => row.map(val => Math.round(val)));
+    
+      pontosTransformados.push(pontoTransformado);
+    });
+    
+    return pontosTransformados;
+  }
   
   getTransformacao(tipo_transformacao, params){
     if(tipo_transformacao === 'translacao'){

@@ -20,7 +20,6 @@ import EPontoM from './pages/Elipses/EPontoM';
 // Recorte de tela
 import CohenSutherland from './pages/Recorte-de-Tela/CohenSutherland';
 import Transformacao2D from './pages/Recorte-de-Tela/Transformacao2D';
-// import Transformacao2D from './pages/Recorte-de-Tela/transformacao-2d.html';
 import Transformacao3D from './pages/Recorte-de-Tela/Transformacao3D';
 import Cubo from './pages/Recorte-de-Tela/Cubo.js';
 import ProjecaoIsometrica from './pages/Recorte-de-Tela/ProjecaoIsometrica.js';

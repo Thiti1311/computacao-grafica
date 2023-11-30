@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 const path = require('path')
-const controller2d = require('../controllers/transformacaoFiguras2d.controller')
+const controller2d = require('../controllers/transformacaoFiguras2d.controller.js')
 const controller3d = require('../controllers/transformacaoFiguras3d.controller')
 const RecorteTela = require('../controllers/recorteTela.controller')
 
@@ -15,7 +15,7 @@ const COHEN_SUTHERLAND = `${URL_BASE}/cohen-sutherland`;
 
 
 // req should be in format -> [{"tipo_transformacao": "translacao", "param1": "param1", "param2": "param2", ...},{"tipo_transformacao": "translacao", "param1": "param1", "param2": "param2", ...}][{"pontox": "x", "pontoY": "Y"},{"pontox": "x", "pontoY": "Y"},...]
-router.get(TRANSFORMACAO2D, (req, res, next) => {
+router.post(TRANSFORMACAO2D, (req, res, next) => {
 	res.send(controller2d.transformaPontos(req))
 })
 
