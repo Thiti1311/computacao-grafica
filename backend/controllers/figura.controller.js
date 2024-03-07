@@ -4,23 +4,37 @@ class FiguraController {
     try{
       const ndH = w;
       const ndV = h; //Dps torno algo varaivel
-      
+
       let ponto = [];
     
       let ndcX, ndcY;
       let dcX, dcY;
 
-      // Passo 1 w.c -> ndc
-  
-      ndcX = (x - xMin) / (xMax - xMin);
-      ndcY = (y - yMin) / (yMax - yMin);
+      if(min === 0 && max === 1){
 
-      // Passo 2 NDC  -> DC
+        // Passo 1 w.c -> ndc
+        ndcX = (x - xMin) / (xMax - xMin);
+        ndcY = (y - yMin) / (yMax - yMin);
+
+        // Passo 2 NDC  -> DC
+        dcX = Math.round(ndcX * ( ndH - 1));
+        dcY = Math.round(ndcY * ( ndV - 1));
+
+      }else if(min === -1 && max === 1){
+
+        // Passo 1 w.c -> ndc
+        ndcX = ( (((x + xMin)/(xMax - xMin)) * 2) - 1);
+        ndcY = ( (((y + yMin)/(yMax - yMin)) * 2) - 1);
+        
+        // Passo 2 NDC  -> DC
+        // dcX = Math.round((( (ndcX + 1) / 2 ) * ndH) - 1);
+        // dcY = Math.round((( (ndcY + 1) / 2 ) * ndV) - 1);
+
+        dcX = Math.round( ((ndH * ndcX + ndH - 4) / 4) );
+        dcY = Math.round( ((ndV * ndcY + ndV - 4) / 4) );
   
-      // Para quando o min = 0 o calculo aplicado é resumido nisso
-      dcX = Math.round(ndcX * ( ndH - 1));
-      dcY = Math.round(ndcY * ( ndV - 1));
-  
+      }
+
       // dcX = Math.round(((ndcX - min) / (max - min)) * (ndH - max - min) + min);
       // dcY = Math.round(((ndcY - min) / (max - min)) * (ndV - max - min) + min);
       

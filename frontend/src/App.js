@@ -5,6 +5,7 @@ import Menu from './components/Menu';
 
 import Home from './pages/Home';
 import Sobre from './pages/Sobre';
+import MenuStart from './pages/MenuStart.js'
 
 // NDC
 import NDC from './pages/NDC/Ndc';
@@ -40,6 +41,7 @@ const App = () => {
       <Menu />
       <Route exact path="/" component={Home} />
       <Route path="/sobre" component={Sobre} />
+      <Route path="/menustart" component={MenuStart} />
       <Route path="/ndc/ndc" component={NDC} />
       <Route path="/retas/dda" component={RDda} />
       <Route path="/retas/pontom" component={RPontoM} />

@@ -1,0 +1,96 @@
+.home-page {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+}
+
+.button-container {
+    position: relative;
+}
+
+.custom-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute;
+}
+
+.custom-button:hover {
+    background-color: #0056b3;
+}
+
+.custom-button:nth-child(1) {
+    top: calc(50% - 100px);
+    left: calc(50% - 100px);
+}
+
+.custom-button:nth-child(2) {
+    top: calc(50% - 200px);
+    left: 50%;
+}
+
+.custom-button:nth-child(3) {
+    top: calc(50% - 100px);
+    left: calc(50% + 100px);
+}
+
+.custom-button:nth-child(4) {
+    top: 50%;
+    left: calc(50% + 200px);
+}
+
+.custom-button:nth-child(5) {
+    top: calc(50% + 100px);
+    left: calc(50% + 100px);
+}
+
+.custom-button:nth-child(6) {
+    top: calc(50% + 200px);
+    left: 50%;
+}
+
+.custom-button:nth-child(7) {
+    top: calc(50% + 100px);
+    left: calc(50% - 100px);
+}
+
+.custom-button:nth-child(8) {
+    top: 50%;
+    left: calc(50% - 200px);
+}
+
+.custom-button:nth-child(9) {
+    top: calc(50% - 100px);
+    left: calc(50% - 100px);
+}
+
+.custom-button:nth-child(10) {
+    top: calc(50% + 100px);
+    left: calc(50% - 100px);
+}
+
+.line {
+    position: absolute;
+    background-color: white;
+}
+
+.vertical-line {
+    width: 2px;
+    height: calc(100% - 200px);
+    top: calc(50% - 100px);
+    left: calc(50% - 1px);
+}
+
+.horizontal-line {
+    width: calc(100% - 200px);
+    height: 2px;
+    top: calc(50% - 1px);
+    left: calc(50% - 100px);
+}

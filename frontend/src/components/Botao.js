@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div className="home-container">
       <h1>Bem-vindo ao Nosso Projeto</h1>
-      <h3>Desenvolvido por: Thiago Felipe, João Victor Marinho, Luana Vidal, Henrique</h3>
+      <h3>Desenvolvido por: Thiago Felipe</h3>
       <Botao />
     </div>
   );
