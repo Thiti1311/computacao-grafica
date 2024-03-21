@@ -53,42 +53,39 @@ function CPontoM() {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
 
-    const canvasWidth = parseInt(formData.canvasWidth); // Obtém a largura do canvas do estado do formulário
-    const canvasHeight = parseInt(formData.canvasHeight); // Obtém a altura do canvas do estado do formulário
+    // Função para desenhar o pixel no canvas
+    const drawPixel = (x, y) => {
+        // Defina a cor do preenchimento
+        context.fillStyle = 'red'; // Altere 'red' para a cor desejada
 
-    // Verifica se a largura e a altura são números válidos
-    if (!isNaN(canvasWidth) && !isNaN(canvasHeight)) {
-      canvas.width = canvasWidth;
-      canvas.height = canvasHeight;
+        // Ajuste o tamanho do pixel
+        const pixelSize = 1; // Ajuste o tamanho conforme necessário
 
-      // Função para desenhar o círculo no canvas
-      const drawCircle = () => {
-        // Limpar o canvas
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Definir as coordenadas do centro do canvas
+        // Calcule as coordenadas do centro
         const centerX = canvas.width / 2;
         const centerY = canvas.height / 2;
 
-        // Loop pelos dados e desenhe cada ponto centralizado
-        data.forEach(({ pontox, pontoy }) => {
-          const x = centerX + pontox;
-          const y = centerY + pontoy;
+        // Ajuste as coordenadas do pixel em relação ao centro
+        const adjustedX = centerX + x;
+        const adjustedY = centerY - y;
 
-          context.beginPath();
-          context.arc(x, y, 1, 0, 2 * Math.PI);
-          context.fill();
-          context.closePath();
-        });
-      };
+        // Desenhe o pixel no canvas
+        context.fillRect(adjustedX, adjustedY, pixelSize, pixelSize);
+    };
 
-      // Chamar a função de desenho após a atualização do estado data
-      drawCircle();
-    }
-  }, [data, formData.canvasWidth, formData.canvasHeight]);
+    // Limpar o canvas
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Desenhar os pontos do array
+    data.forEach(point => {
+        drawPixel(point.pontox, point.pontoy);
+    });
+
+}, [data]);
+
 
   return (
-    <div>
+    <div className='container'>
       <Menu />
       <h1>Círculo Ponto Médio</h1>
 
@@ -121,8 +118,33 @@ function CPontoM() {
         </div>
       </form>
 
-      <div className="canvas-container" style={{ width: `${formData.canvasWidth}px`, height: `${formData.canvasHeight}px` }}>
-        <canvas ref={canvasRef} />
+      <div className="canvas-section">
+
+        <div className="canvas-container">
+          <canvas ref={canvasRef} width={formData.canvasWidth * 2} height={formData.canvasHeight * 2} />
+        </div>
+      </div>
+
+      <h2>Pontos da Reta:</h2>
+      <div className='data'>
+        <table className="points-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>PontoX</th>
+              <th>PontoY</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((point, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{point.pontox}</td>
+                <td>{point.pontoy}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

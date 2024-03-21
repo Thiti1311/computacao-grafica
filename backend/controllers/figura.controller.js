@@ -230,32 +230,35 @@ class FiguraController {
 
   //colocar parametros
   getCirculoPontoMedio(raio, xOrigem, yOrigem){
+
+// console.log(raio, xOrigem, yOrigem)
+
     const pontos = [];
     let x = 0;
     let y = raio;
     let p_medio;
     
-    pontos.push({ pontox: x + xOrigem, pontoy: y + yOrigem });
-    
-    if (Number.isInteger(raio)) {
-      p_medio = 1 - raio;
-    } else {
-      p_medio = (5 / 4) - raio;
-    }
-    
-    while (x <= y) {
-      if (p_medio < 0) {
-        const incrementoX = x + 1;
-        p_medio += 2 * incrementoX + 1;
-        x = incrementoX;
-      } else {
-        const incrementoX = x + 1;
-        const decrementoY = y - 1;
-        p_medio += 2 * (incrementoX - decrementoY);
-        x = incrementoX;
-        y = decrementoY;
+    let d = 0;
+
+    let i = 0;
+    while (x < y ) {
+
+      if(x === 0 ){
+        d = 1 - raio;
+        x++;
+        i--;
+        // pontos.push({ pontox: x, pontoy: y });
+      }else if ( d < 0 ) {
+        d += 2 * pontos[i].pontox + 3;
+        x += 1;
+        // pontos.push({ pontox: x, pontoy: y });
+      } else if(d >= 0) {
+        d += (2 * pontos[i].pontox) - (2 * pontos[i].pontoy) + 5;
+        x += 1;
+        y -= 1;
+        // pontos.push({ pontox: x, pontoy: y });
       }
-    
+
       const pontosSimetricos = [
         [x, y],
         [-x, y],
@@ -266,15 +269,45 @@ class FiguraController {
         [y, -x],
         [-y, -x]
       ];
-    
+
       pontosSimetricos.forEach(([pontox, pontoy]) => {
         pontos.push({ pontox: pontox + xOrigem, pontoy: pontoy + yOrigem });
       });
+
+      console.log()
+        
+      // pontos.push({ pontox: x, pontoy: y });
+
+      console.log(pontos)
+
+      i++;
     }
     
-    pontos.push({ pontox: x - 1, pontoy: y });
+    // if (Number.isInteger(raio)) {
+    //   p_medio = 1 - raio;
+    // } else {
+    //   p_medio = (5 / 4) - raio;
+    // }
+    
+    // while (x <= y) {
+    //   if (p_medio < 0) {
+    //     const incrementoX = x + 1;
+    //     p_medio += 2 * incrementoX + 1;
+    //     x = incrementoX;
+    //   } else {
+    //     const incrementoX = x + 1;
+    //     const decrementoY = y - 1;
+    //     p_medio += 2 * (incrementoX - decrementoY);
+    //     x = incrementoX;
+    //     y = decrementoY;
+    //   }
     
 
+    // }
+    
+    // pontos.push({ pontox: x - 1, pontoy: y });
+    
+// console.log(pontos)
     return pontos;
   }
   

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Menu from '../../components/Menu';
-import '../../styles/Retas.css'; // Importe o arquivo CSS para estilização
+import '../../styles/DDA.css'; // Importe o arquivo CSS para estilização
 import axios from 'axios';
 
 function DDA() {
@@ -8,10 +8,10 @@ function DDA() {
   const rota = 'reta/dda';
 
   const [formData, setFormData] = useState({
-    valuex1: '6',
-    valuey1: '9',
-    valuex2: '9',
-    valuey2: '14',
+    valuex1: '60',
+    valuey1: '90',
+    valuex2: '120',
+    valuey2: '160',
     canvasWidth: '500',
     canvasHeight: '500'
   });
@@ -59,60 +59,87 @@ function DDA() {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
 
-    // Obter as dimensões do canvas
-    const canvasWidth = parseInt(formData.canvasWidth);
-    const canvasHeight = parseInt(formData.canvasHeight);
+    // Definir as dimensões do canvas
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
 
-    // Definir o ponto médio do canvas
+    // Definir o centro do canvas
     const centerX = canvasWidth / 2;
     const centerY = canvasHeight / 2;
 
-    // Limpar o canvas
-    context.clearRect(0, 0, canvasWidth, canvasHeight);
+    // Função para desenhar pontos no canvas
+    const drawPoints = (points) => {
+      // Limpar o canvas
+      // context.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    // Desenhar as retas
-    lines.forEach(line => {
-      const { pontox, pontoy } = line;
+      // Definir a cor e o tamanho dos pontos
+      context.fillStyle = 'red'; // Altere 'red' para a cor desejada
+      const pixelSize = 2; // Ajuste o tamanho do ponto conforme necessário
 
-      // Calcular as coordenadas no canvas com base no centro
-      const canvasX = centerX + pontox;
-      const canvasY = centerY - pontoy;
+      // Desenhar cada ponto
+      points.forEach(point => {
+        // Ajustar as coordenadas em relação ao centro do canvas
+        const adjustedX = centerX + point.pontox;
+        const adjustedY = centerY - point.pontoy;
+        // Desenhar o ponto ajustado
+        context.fillRect(adjustedX, adjustedY, pixelSize, pixelSize);
+      });
+    };
 
-      context.fillRect(canvasX, canvasY, 1, 1);
-    });
-  }, [lines, formData.canvasWidth, formData.canvasHeight]);
+    // Função para desenhar o pixel 0,0
+    const drawPixel = () => {
+      // Defina a cor do preenchimento
+      context.fillStyle = 'white'; // Altere 'white' para a cor desejada
+
+      // Ajuste o tamanho do pixel
+      const pixelSize = 5; // Ajuste o tamanho conforme necessário
+
+      // Desenhe o pixel no centro do canvas
+      context.fillRect(centerX, centerY, pixelSize, pixelSize);
+    };
+
+    // Chamar a função para desenhar o pixel 0,0
+    drawPixel();
+
+    // Verificar se há pontos para desenhar
+    if (lines.length > 0) {
+      drawPoints(lines);
+    }
+  }, [lines]);
+
 
   return (
-    <div>
+    <div className="container">
       <Menu />
       <h1 className='title'>Reta DDA</h1>
 
       <form onSubmit={handleSubmit} className="input-card">
-        <h2>Ponto 1</h2>
         <div className="input-row">
           <div className="input-group">
-            <label>Valor x1:</label>
-            <input type="number" name="valuex1" value={formData.valuex1} onChange={handleChange} />
+            <h2>Ponto 1</h2>
+            <div className="input-group">
+              <label>Valor x1:</label>
+              <input type="number" name="valuex1" value={formData.valuex1} onChange={handleChange} />
+            </div>
+            <div className="input-group">
+              <label>Valor y1:</label>
+              <input type="number" name="valuey1" value={formData.valuey1} onChange={handleChange} />
+            </div>
           </div>
+          <div className="vertical-line"></div>
           <div className="input-group">
-            <label>Valor y1:</label>
-            <input type="number" name="valuey1" value={formData.valuey1} onChange={handleChange} />
+            <h2>Ponto 2</h2>
+            <div className="input-group">
+              <label>Valor x2:</label>
+              <input type="number" name="valuex2" value={formData.valuex2} onChange={handleChange} />
+            </div>
+            <div className="input-group">
+              <label>Valor y2:</label>
+              <input type="number" name="valuey2" value={formData.valuey2} onChange={handleChange} />
+            </div>
           </div>
         </div>
-
-        <h2>Ponto 2</h2>
-        <div className="input-row">
-          <div className="input-group">
-            <label>Valor x2:</label>
-            <input type="number" name="valuex2" value={formData.valuex2} onChange={handleChange} />
-          </div>
-          <div className="input-group">
-            <label>Valor y2:</label>
-            <input type="number" name="valuey2" value={formData.valuey2} onChange={handleChange} />
-          </div>
-        </div>
-
-        <h2>Tamanho do Canvas</h2>
+        <h2 className="title-input">Tamanho do Canvas</h2>
         <div className="input-row">
           <div className="input-group">
             <label>Largura:</label>
@@ -129,8 +156,33 @@ function DDA() {
         </div>
       </form>
 
-      <div className="canvas-container" style={{ width: `${formData.canvasWidth}px`, height: `${formData.canvasHeight}px` }}>
-        <canvas ref={canvasRef} />
+      <div className="canvas-section">
+
+        <div className="canvas-container">
+          <canvas ref={canvasRef} width={formData.canvasWidth * 2} height={formData.canvasHeight * 2} />
+        </div>
+      </div>
+
+      <h2>Pontos da Reta:</h2>
+      <div className='data'>
+        <table className="points-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>PontoX</th>
+              <th>PontoY</th>
+            </tr>
+          </thead>
+          <tbody>
+            {lines.map((point, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{point.pontox}</td>
+                <td>{point.pontoy}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

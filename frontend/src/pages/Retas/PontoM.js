@@ -8,10 +8,10 @@ function PontoM() {
   const rota = 'reta/ponto-medio';
 
   const [formData, setFormData] = useState({
-    valuex1: '6',
-    valuey1: '9',
-    valuex2: '9',
-    valuey2: '14',
+    valuex1: '60',
+    valuey1: '90',
+    valuex2: '90',
+    valuey2: '140',
     canvasWidth: '500', // Valor padrão para largura do canvas
     canvasHeight: '500' // Valor padrão para altura do canvas
   });
@@ -64,31 +64,56 @@ function PontoM() {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
 
-    // Obter as dimensões do canvas
-    const canvasWidth = parseInt(formData.canvasWidth);
-    const canvasHeight = parseInt(formData.canvasHeight);
+    // Definir as dimensões do canvas
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
 
-    // Definir o ponto médio do canvas
+    // Definir o centro do canvas
     const centerX = canvasWidth / 2;
     const centerY = canvasHeight / 2;
 
-    // Limpar o canvas
-    context.clearRect(0, 0, canvasWidth, canvasHeight);
+    // Função para desenhar pontos no canvas
+    const drawPoints = (points) => {
+      // Limpar o canvas
+      // context.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    // Desenhar as retas
-    lines.forEach(line => {
-      const { pontox, pontoy } = line;
+      // Definir a cor e o tamanho dos pontos
+      context.fillStyle = 'red'; // Altere 'red' para a cor desejada
+      const pixelSize = 2; // Ajuste o tamanho do ponto conforme necessário
 
-      // Calcular as coordenadas no canvas com base no centro
-      const canvasX = centerX + pontox;
-      const canvasY = centerY - pontoy;
+      // Desenhar cada ponto
+      points.forEach(point => {
+        // Ajustar as coordenadas em relação ao centro do canvas
+        const adjustedX = centerX + point.pontox;
+        const adjustedY = centerY - point.pontoy;
+        // Desenhar o ponto ajustado
+        context.fillRect(adjustedX, adjustedY, pixelSize, pixelSize);
+      });
+    };
 
-      context.fillRect(canvasX, canvasY, 1, 1);
-    });
-  }, [lines, formData.canvasWidth, formData.canvasHeight]);
+    // Função para desenhar o pixel 0,0
+    const drawPixel = () => {
+      // Defina a cor do preenchimento
+      context.fillStyle = 'white'; // Altere 'white' para a cor desejada
+
+      // Ajuste o tamanho do pixel
+      const pixelSize = 5; // Ajuste o tamanho conforme necessário
+
+      // Desenhe o pixel no centro do canvas
+      context.fillRect(centerX, centerY, pixelSize, pixelSize);
+    };
+
+    // Chamar a função para desenhar o pixel 0,0
+    drawPixel();
+
+    // Verificar se há pontos para desenhar
+    if (lines.length > 0) {
+      drawPoints(lines);
+    }
+  }, [lines]);
 
   return (
-    <div>
+    <div className="container">
       <Menu />
       <h1>Reta Ponto Médio</h1>
 
@@ -134,8 +159,34 @@ function PontoM() {
         </div>
       </form>
 
-      <div className="canvas-container" style={{ width: `${formData.canvasWidth}px`, height: `${formData.canvasHeight}px` }}>
-        <canvas ref={canvasRef} />
+  
+      <div className="canvas-section">
+
+        <div className="canvas-container">
+          <canvas ref={canvasRef} width={formData.canvasWidth * 2} height={formData.canvasHeight * 2} />
+        </div>
+      </div>
+
+      <h2>Pontos da Reta:</h2>
+      <div className='data'>
+        <table className="points-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>PontoX</th>
+              <th>PontoY</th>
+            </tr>
+          </thead>
+          <tbody>
+            {lines.map((point, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{point.pontox}</td>
+                <td>{point.pontoy}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

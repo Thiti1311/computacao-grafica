@@ -60,7 +60,7 @@ const Menu = () => {
                 ))}
               </ul>
             )}
-            {page.key === PagesMenu.PROJETO2.key && openSubMenu === page.key && (
+            {/* {page.key === PagesMenu.PROJETO2.key && openSubMenu === page.key && (
               <ul className="submenu">
                 {Object.values(PagesProjeto2).map((subPage) => (
                   <li key={subPage.key}>
@@ -70,7 +70,7 @@ const Menu = () => {
                   </li>
                 ))}
               </ul>
-            )}
+            )} */}
           </li>
         ))}
       </ul>

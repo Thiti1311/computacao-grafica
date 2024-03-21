@@ -1,8 +1,15 @@
+<<<<<<< Updated upstream
 .title{
     position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
+=======
+.container {
+    background-color: #1f1f1f;
+    color: white;
+    padding: 20px;
+>>>>>>> Stashed changes
 }
 
 .input-card {
@@ -65,4 +72,29 @@
     height: auto; /* Manter a proporção original do canvas */
     max-height: 100%; /* Altura máxima do canvas (1080 pixels) */
     margin: 0 auto;
+}
+
+.input-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+}
+
+.input-group {
+    margin: 10px;
+}
+
+.vertical-line {
+    border-left: 2px solid white;
+    height: 100px;
+    /* Ajuste a altura conforme necessário */
+    margin: 0 10px;
+}
+
+.title-input{
+    text-align: center;
 }
